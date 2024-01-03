@@ -82,7 +82,7 @@ def GetSalesDataPerYearPerMonthUsingParameter():
 ###################################### GetOfferCouponType
 @app.route('/getOfferCouponType')
 def getOfferCouponTypedata():
-    result = db.session.execute(text('CALL GetOfferCouponType(6);'))
+    result = db.session.execute(text('CALL GetOfferCouponType(5);'))
     datakey = result.keys()
     data = result.fetchall()
     result.close()
@@ -224,6 +224,16 @@ def SSC2(offerID,pkey):
         data=resultType.fetchall()
         resultType.close()
         dict_list_type=[{item:tup[i] for i,item in enumerate(datakey)}for tup in data]
+
+
+        if offerID == "EKS2":
+            resultType = db.session.execute(text('CALL GetOldOfferCoupenType();'))
+            datakey = resultType.keys()
+            data = resultType.fetchall()
+            resultType.close()
+            dict_list_type = [{item: tup[i] for i, item in enumerate(datakey)} for tup in data]
+            type_ids = [item['type_Id'] for item in dict_list_type]
+            # print("Type IDs:", type_ids)
         
         if (offerID=='SSC2'):
              result = db.session.execute(text('CALL SweetSummerOffer();'))
@@ -234,7 +244,7 @@ def SSC2(offerID,pkey):
         elif(offerID=='WSO'):
              result = db.session.execute(text('CALL NewOffer();')) 
         elif(offerID=="EKS2"):
-             result = db.session.execute(text('CALL GetEkSeBadhkarEkOffer();'))
+             result = db.session.execute(text('CALL GetEkSeBadhkarEkOfferSeason1();'))
         elif(offerID=="NYD"):
              result = db.session.execute(text('CALL MonsoonOffer();'))
         else:
@@ -286,7 +296,7 @@ def SSC2(offerID,pkey):
             result_wso_count.close()
             counts.append(count)
         elif offerID == 'EKS2':
-            result_wso_count = db.session.execute(text('CALL GetEkSeBadhkarEkOffer()'))
+            result_wso_count = db.session.execute(text('CALL GetEkSeBadhkarEkOfferSeason1()'))
             count = result_wso_count.fetchone()[0]
             result_wso_count.close()
             counts.append(count)
@@ -334,7 +344,7 @@ def salesgroup(salesgroup,pkey):
         # print("/offer/<offerID>/<string:pkey>", request.args.get('salesgroup', type=int))
         # print("/offer_details/<salesgroup>/<int:pkey>", request.args.get('offer_name', type=int))
         offer_id = request.args.get('offer_id', type=int)
-        print("ss",offer_id)
+        # print("ss",offer_id)
 
         resultType=db.session.execute(text('CALL GetOfferCouponType('+str(pkey)+');'))
         datakey=resultType.keys()
@@ -342,6 +352,15 @@ def salesgroup(salesgroup,pkey):
         resultType.close()
         dict_list_type=[{item:tup[i] for i,item in enumerate(datakey)}for tup in data]
         # print("Ss",dict_list_type)
+
+        if offer_id == 5:
+            resultType = db.session.execute(text('CALL GetOldOfferCoupenType();'))
+            datakey = resultType.keys()
+            data = resultType.fetchall()
+            resultType.close()
+            dict_list_type = [{item: tup[i] for i, item in enumerate(datakey)} for tup in data]
+            type_ids = [item['type_Id'] for item in dict_list_type]
+            # print("Type IDs:", type_ids)
         
 
 
@@ -408,7 +427,7 @@ def PayerId(payer,pkey):
             # print("/offer/<offerID>/<string:pkey>", request.args.get('salesgroup', type=int))
             # print("/offer_details/<salesgroup>/<int:pkey>", request.args.get('offer_name', type=int))
             offer_id = request.args.get('offer_id', type=int)
-            print("ss",offer_id)
+            # print("ss",offer_id)
 
             resultType=db.session.execute(text('CALL GetOfferCouponType('+str(pkey)+');'))
             datakey=resultType.keys()
@@ -416,6 +435,15 @@ def PayerId(payer,pkey):
             resultType.close()
             dict_list_type=[{item:tup[i] for i,item in enumerate(datakey)}for tup in data]
             # print("Ss",dict_list_type)
+
+            if offer_id == 5:
+                resultType = db.session.execute(text('CALL GetOldOfferCoupenType();'))
+                datakey = resultType.keys()
+                data = resultType.fetchall()
+                resultType.close()
+                dict_list_type = [{item: tup[i] for i, item in enumerate(datakey)} for tup in data]
+                type_ids = [item['type_Id'] for item in dict_list_type]
+                # print("Type IDs:", type_ids)
             
 
 
@@ -638,9 +666,9 @@ def monsoonoffer():
 @app.route('/api/GetWinterOfferByPayerId', methods=['GET'])
 def menulist():
     try:
-        result = db.session.execute(text(f"CALL GetSpdOfferDetailsBypayerId('NIM001')"))   #GetMonsoonOfferByPayerId('SHR097') 
-        # result = db.session.execute(text("CALL GetEkSeBadhkarEkOffer();"))
-        # result =db.session.execute(text(f"CALL GetEkSeBadhkarEkOfferBySalesgroup('MARATHWADA - 1');"))
+        # result = db.session.execute(text(f"CALL GetSpdOfferDetailsBypayerId('NIM001')"))   #GetMonsoonOfferByPayerId('SHR097')  GetEkSeBadhkarEkOfferSeason1
+        result = db.session.execute(text("CALL GetEkSeBadhkarEkOfferSeason1();"))
+        # result =db.session.execute(text(f"CALL NewOffer('KHANDESH - 1');"))
         # result.count()
         # print("result_data",result_data)
         datakey = result.keys()
