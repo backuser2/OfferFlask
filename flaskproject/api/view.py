@@ -377,7 +377,7 @@ def salesgroup(salesgroup,pkey):
             result = db.session.execute(text(f"CALL GetSalesgroupData('{salesgroup}');"))
 
         elif offer_id == 5:
-            result = db.session.execute(text(f"CALL GetSalesgroupData('{salesgroup}');"))
+            result = db.session.execute(text(f"CALL GetEkSeBadhkarEkOfferSeason1BySalesgroup('{salesgroup}');"))
 
         elif offer_id == 6:
             result = db.session.execute(text(f"CALL GetSalesgroupData('{salesgroup}');"))
@@ -667,8 +667,8 @@ def monsoonoffer():
 def menulist():
     try:
         # result = db.session.execute(text(f"CALL GetSpdOfferDetailsBypayerId('NIM001')"))   #GetMonsoonOfferByPayerId('SHR097')  GetEkSeBadhkarEkOfferSeason1
-        result = db.session.execute(text("CALL GetEkSeBadhkarEkOfferSeason1();"))
-        # result =db.session.execute(text(f"CALL NewOffer('KHANDESH - 1');"))
+        # result = db.session.execute(text("CALL GetEkSeBadhkarEkOfferSeason1();"))
+        result =db.session.execute(text(f"CALL GetEkSeBadhkarEkOfferSeason1BySalesgroup('KHANDESH - 1');"))
         # result.count()
         # print("result_data",result_data)
         datakey = result.keys()
