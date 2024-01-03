@@ -460,7 +460,7 @@ def PayerId(payer,pkey):
                 result = db.session.execute(text(f"CALL GetNewWinterOfferBypayerId('{payer}');"))
 
             elif offer_id == 5:
-                result = db.session.execute(text(f"CALL GetNewWinterOfferBypayerId('{payer}');"))
+                result = db.session.execute(text(f"CALL GetEkSeBadhkarEkOfferSeason1ByPayerId('{payer}');"))
 
             elif offer_id== 6:
                 result = db.session.execute(text(f"CALL GetNewWinterOfferBypayerId('{payer}');"))
@@ -666,9 +666,9 @@ def monsoonoffer():
 @app.route('/api/GetWinterOfferByPayerId', methods=['GET'])
 def menulist():
     try:
-        # result = db.session.execute(text(f"CALL GetSpdOfferDetailsBypayerId('NIM001')"))   #GetMonsoonOfferByPayerId('SHR097')  GetEkSeBadhkarEkOfferSeason1
+        result = db.session.execute(text(f"CALL GetEkSeBadhkarEkOfferSeason1ByPayerId('NIM001')"))   #GetMonsoonOfferByPayerId('SHR097')  GetEkSeBadhkarEkOfferSeason1
         # result = db.session.execute(text("CALL GetEkSeBadhkarEkOfferSeason1();"))
-        result =db.session.execute(text(f"CALL GetEkSeBadhkarEkOfferSeason1BySalesgroup('KHANDESH - 1');"))
+        # result =db.session.execute(text(f"CALL GetEkSeBadhkarEkOfferSeason1BySalesgroup('KHANDESH - 1');"))
         # result.count()
         # print("result_data",result_data)
         datakey = result.keys()
